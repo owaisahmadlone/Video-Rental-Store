@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <title>Movies Deck</title>
+</head>
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<body>
+  <img src="/static/images/MoviesDeck.png" style="margin: 10px;position: relative;left: 40rem;top: 1rem;" width="217" height="42">
+  <div>
+    <h1>Continue as..</h1>
+  </div>
+  <div class ="btn-container">
+  <button onclick="window.location.href='/admin/'">Admin</button>
+  <button onclick="redirectToLogin('staff')">Staff</button>
+  <button onclick="redirectToLogin('customer')">Customer</button>
+  </div>
+  
+
+  <script>
+    function redirectToLogin(role) {
+      // Set a cookie to remember the selected role
+      document.cookie = "selected_role=" + role;
+
+      // Redirect to the appropriate login page
+      if (role === 'staff') {
+        window.location.href = "/staff/login/?next=" + encodeURIComponent("/" + role + "/");
+      } else if (role === 'customer') {
+        window.location.href = "customer/login/?next=" + encodeURIComponent("/" + role + "/");
+      }
+    }
+  </script>
+</body>
+</html>

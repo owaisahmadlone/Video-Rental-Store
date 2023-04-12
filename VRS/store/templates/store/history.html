@@ -1,0 +1,68 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="box-element">
+
+				<a  class="btn btn-outline-light" href="{% url 'store' %}">&#x2190; Continue Shopping</a>
+
+				<br>
+				<br>
+				<table class="table">
+					<tr>
+						<th><h5>Total Items: <strong> {{totalItems}}</strong></h5></th>
+						<th><h5>Total Purchased:<strong> {{purchasedItems}}</strong></h5></th>
+						<th><h5>Total Rented:<strong> {{rentedItems}} </strong></h5></th>
+					</tr>
+				</table>
+
+			</div>
+
+			<br>
+
+			<div class="box-element">
+				<div class="cart-row">
+					<div style="flex:1"></div>
+					<div style="flex:1"><strong>Item</strong></div>
+					<div style="flex:1"><strong>Status</strong></div>
+					<div style="flex:1"><strong>Quantity</strong></div>
+					<div style="flex:1"><strong>Timeline</strong></div>
+					<div style="flex:0.7"><strong>Total</strong></div>
+					<div style="flex:1"><strong>Purchase/Rent Date</strong></div>
+
+				</div>
+
+
+				{%for item in purchased_list.orderitems.all%}
+				<div class="cart-row">
+					<div style="flex:1"><img class="row-image" src="{{item.product.imageURL}}"></div>
+					<div style="flex:1"><p>{{item.product.name}}</p></div>
+					<div style="flex:1"><p>
+						{%if item.purchase_type%}
+							purchased
+						{%else%}
+							rented
+						{%endif%}
+					</p></div>
+					<div style="flex:1"><p>
+						{{item.quantity}}
+					</p></div>
+					<div style="flex:1"><p>
+						{% if item.purchase_type %}
+							--
+						{% else %}
+							{%if item.get_timeline%}
+								{{item.get_timeline}} days left
+							{%else%}
+								Rental Period Expired!
+							{%endif%}
+						{% endif %}</p></div>
+					<div style="flex:0.7"><p>₹{{item.get_total}}</p></div>
+					<div style="flex:1"><p>{{item.date_added}}</p></div>
+				</div>
+				{%endfor%}
+			</div>
+		</div>
+	</div>
+{% endblock content %}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+  <title>Staff Login</title>
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+  <img src="/static/images/MoviesDeck.png" style="margin: 10px;position: relative;left: 40rem;top: 1rem;" width="217" height="42">
+  <div>
+    <h1>Staff Login</h1>
+    {% if error_message %}
+  <p class="error-message">{{ error_message }}</p>
+{% endif %}
+
+{% if success_message %}
+  <p class="success-message">{{ success_message }}</p>
+{% endif %}
+
+    <form method="POST" action="{% url 'staff_login' %}">
+
+      {% csrf_token %}
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username"><br><br>
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password"><br><br>
+      <input type="submit" value="Login">
+    </form>
+  </div>
+</body>
+</html>

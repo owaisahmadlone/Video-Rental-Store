@@ -1,0 +1,22 @@
+{% extends "store/main.html" %}
+{% load static %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="box-element product" xmlns="http://www.w3.org/1999/html">
+  <h1>{{ product.name }}</h1>
+  <img src="{%static 'images/IMDb logo.png'%}"style="width: 50px; height: 28px; float:left; margin-left: 0px ; margin-right:-100px; margin-top:-2px">
+  <img src="{% static 'images/star.png'%}" style="width: 20px; height: 20px; float:left; margin-left: 55px ; margin-right:5px; margin-top:3px" >
+  <p ><strong>{{ product.rating }}/10</strong></p>
+  <img src="{{ product.imageURL }}" style="width: 320px; height: 180px; float: left; margin-right: 30px;">
+  <p >{{ product.description }}</p>
+  <p ><strong>Director</strong>: {{ product.director }}</p>
+
+  <br>
+  <br>
+ 
+  <div style="clear: both;"></div>
+
+</div>
+{% endblock %}

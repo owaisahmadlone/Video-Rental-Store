@@ -1,0 +1,86 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% load custom_filters %}
+<meta charset="utf-8"> 
+      
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+      
+<link rel="stylesheet" href= 
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> 
+        
+<script src= 
+"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> 
+</script> 
+        
+<script src= 
+"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"> 
+</script> 
+        
+<script src= 
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"> 
+</script> 
+      
+{% block content %}
+
+{% for Genre in Genres %}
+<h1><font color="#fff" size="20" >{{Genre}}</font></h1>
+<div class="row">
+    {% for product in products %}
+    {% if Genre in product.genre|split:" | " %}
+    
+    <div class="col-lg-4 " id="{{ product.name }}">
+        <img class="thumbnail" src="{{ product.imageURL }}">
+        <div class="box-element product">
+            <h6><strong>{{ product.name }}</strong></h6>
+            <p style="color: #adb5bd;">{{product.genre}}</p>
+            
+            <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+            <a class="btn btn-outline-success" href="/view/{{ product.name }}">View</a>
+            
+            {% if product in personal_list.products.all %}
+            <button type="button" class="btn btn-danger btn-circle btn-sm" data-product="{{ product.name }}" onclick="removeFromList(this)">-</button>
+            <button type="button" class="btn btn-success btn-circle btn-sm d-none" data-product="{{ product.name }}" onclick="addToList(this)">+</button>
+            {% else %}
+            <button type="button" class="btn btn-danger btn-circle btn-sm d-none" data-product="{{ product.name }}" onclick="removeFromList(this)">-</button>
+            <button type="button" class="btn btn-success btn-circle btn-sm" data-product="{{ product.name }}" onclick="addToList(this)">+</button>
+            {% endif %}
+            
+            
+            <h6 style="display: inline-block; float: right"><strong>Buy: ₹{{ product.purchase_price|floatformat:2 }}</strong></h6>
+            <h6 style="display: inline-block; float: right"><strong style="
+                position: absolute;
+                top: 297px;
+            ">Rent: ₹{{ product.rent_price|floatformat:2 }}</strong></h6>
+        </div>
+    </div>
+    
+    {% endif %}
+    {% endfor %}
+
+    
+</div>
+{% endfor %}
+
+<script>
+  function addToList(button) {
+      console.log('Button clicked!')
+      const productName = button.getAttribute('data-product');
+
+      // Send an AJAX request to the server to toggle the inlist value
+      fetch(`/addToList/${productName}/`)
+          .then(() => location.reload());
+  }
+
+  function removeFromList(button) {
+      const productName = button.getAttribute('data-product');
+  
+      // Send an AJAX request to the server to toggle the inlist value
+      fetch(`/removeFromList/${productName}/`)
+        .then(() => location.reload())
+    }
+
+
+
+</script>
+
+{% endblock content %}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{%load static%}
+<html>
+<head>
+  <title>Sign In</title>
+</head>
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<body>
+  <!-- <h1>Customer Signup</h1>
+  {% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+  {% endif %} -->
+
+  
+  <img src="/static/images/MoviesDeck.png" style="margin: 10px;position: relative;left: 40rem;top: 1rem;" width="217" height="42">
+  <div>
+  <h1>Sign Up</h1>
+  {% if error_message %}
+  <p class="error-message">{{ error_message }}</p>
+{% endif %}
+    
+  <form method="POST">
+    {% csrf_token %}
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username"><br><br>
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email"><br><br>
+    <label for="password1">Password:</label>
+    <input type="password" name="password1" id="password1"><br><br>
+    <label for="password2">Confirm password:</label>
+    <input type="password" name="password2" id="password2"><br><br>
+    <button type="submit"> Sign Up</button>
+    
+    <h4>
+        <p>Already have an account? <a href="/customer/login/">Log in here!</a></p>
+        </h4>
+  </form>
+  </div>
+  
+</body>
+</html>
